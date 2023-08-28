@@ -1,7 +1,6 @@
 package mbuchatskyi;
 
 import java.math.BigDecimal;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
@@ -36,26 +35,14 @@ public class MainApplication {
 
 		System.out.println("LOG: Validation was successful.");
 
-		try {
-			DAO.insert(equation);
-		} catch (SQLException e) {
-			System.exit(0);
-		}
+		DAO.insert(equation);
 
 		System.out.println("LOG: Equation was added to DB.");
 
 		System.out.println("Please, enter the root to your equation:");
-
 		BigDecimal root = SCAN.nextBigDecimal();
 
-		String equationModified = equation.replaceAll("x", root.toString());
-
-		int index = equationModified.indexOf('=');
-		String leftSubstring = equationModified.substring(0, index);
-		String rightSubString = equationModified.substring(index + 1, equationModified.length());
-
-		if (DAO.checkIfRootValid(leftSubstring).subtract(DAO.checkIfRootValid(rightSubString)).abs()
-				.compareTo(new BigDecimal(10e-09)) < 0) {
+		if (checkIfRootMatchesEquation(equation, root)) {
 			DAO.insertWithRoot(equation, root);
 			System.out.println("LOG: You entered the correct root! Equation was added to DB with its root.");
 		}
@@ -87,5 +74,16 @@ public class MainApplication {
 	private static String enterEquation() {
 		System.out.println("Please, enter the equation. Note that the equation must be written on one line.");
 		return SCAN.nextLine();
+	}
+
+	private static boolean checkIfRootMatchesEquation(String equation, BigDecimal root) {
+		String equationModified = equation.replaceAll("x", root.toString());
+
+		int index = equationModified.indexOf('=');
+		String leftSubstring = equationModified.substring(0, index);
+		String rightSubString = equationModified.substring(index + 1, equationModified.length());
+
+		return DAO.checkIfRootValid(leftSubstring).subtract(DAO.checkIfRootValid(rightSubString)).abs()
+				.compareTo(new BigDecimal(10e-09)) < 0;
 	}
 }

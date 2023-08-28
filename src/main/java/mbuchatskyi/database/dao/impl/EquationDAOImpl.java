@@ -25,7 +25,7 @@ public class EquationDAOImpl implements EquationDAO {
 			+ "having count(*) = ";
 	
 	@Override
-	public boolean insert(String equation) throws SQLException {
+	public boolean insert(String equation) {
 		try (Connection cn = DBManager.getInstance().getConnection();
 				PreparedStatement ps = cn.prepareStatement(MYSQL_INSERT_EQUATION)) {
 			ps.setString(1, equation);

@@ -19,6 +19,7 @@ public class EquationValidator {
 			return false;
 		}
 		
+		// Should not contain 2 consecutive mathematical operations
 		String regex = "^(?!.*[+\\-*/]{2})[\\d.\\-+*/()=x ]+$";
         Pattern pattern = Pattern.compile(regex);
         

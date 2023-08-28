@@ -1,11 +1,10 @@
 package mbuchatskyi.database.dao;
 
 import java.math.BigDecimal;
-import java.sql.SQLException;
 import java.util.List;
 
 public interface EquationDAO {
-	boolean insert(String equation) throws SQLException;
+	boolean insert(String equation);
 	
 	BigDecimal checkIfRootValid(String equation);
 	
