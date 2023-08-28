@@ -17,7 +17,7 @@ DROP TABLE IF EXISTS `equation_root` ;
 
 CREATE TABLE IF NOT EXISTS `equation_root` (
   `equation_id` VARCHAR(45) NOT NULL,
-  `root` BIGINT NOT NULL,
+  `root` DECIMAL(10,2) NOT NULL,
   PRIMARY KEY (`equation_id`),
   CONSTRAINT `fk_equation_root`
     FOREIGN KEY (`equation_id`)
