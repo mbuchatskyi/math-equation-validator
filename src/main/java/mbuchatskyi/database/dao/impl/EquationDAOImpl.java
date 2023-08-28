@@ -31,7 +31,9 @@ public class EquationDAOImpl implements EquationDAO {
 			ps.setString(1, equation);
 			return (ps.executeUpdate() != 0);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.out.println("ERROR:" + e.getMessage());
+			System.out.println("Program is terminated.");
+			System.exit(0);
 		}
 
 		return false;
@@ -44,7 +46,9 @@ public class EquationDAOImpl implements EquationDAO {
 			rs.next();
 			return rs.getBigDecimal(1);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.out.println("ERROR:" + e.getMessage());
+			System.out.println("Program is terminated.");
+			System.exit(0);
 		}
 
 		return new BigDecimal(-1);
@@ -58,7 +62,9 @@ public class EquationDAOImpl implements EquationDAO {
 			ps.setBigDecimal(2, root);
 			return (ps.executeUpdate() != 0);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.out.println("ERROR:" + e.getMessage());
+			System.out.println("Program is terminated.");
+			System.exit(0);
 		}
 
 		return false;
@@ -66,18 +72,20 @@ public class EquationDAOImpl implements EquationDAO {
 
 	@Override
 	public List<String> getEquationsByRoot(BigDecimal root) {
-		List<String> resultSet = new ArrayList<>();
+		List<String> result = new ArrayList<>();
 
 		try (Connection cn = DBManager.getInstance().getConnection(); Statement statement = cn.createStatement()) {
 			ResultSet rs = statement.executeQuery(MYSQL_SELECT_EQUATIONS_BY_ROOT + root);
 			while (rs.next()) {
-				resultSet.add(rs.getString(1));
+				result.add(rs.getString(1));
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.out.println("ERROR:" + e.getMessage());
+			System.out.println("Program is terminated.");
+			System.exit(0);
 		}
 
-		return resultSet;
+		return result;
 	}
 
 	@Override
@@ -90,7 +98,9 @@ public class EquationDAOImpl implements EquationDAO {
 				result.add(rs.getString(1));
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.out.println("ERROR:" + e.getMessage());
+			System.out.println("Program is terminated.");
+			System.exit(0);
 		}
 
 		return result;
